@@ -1,9 +1,10 @@
 {
-  "name": "DoAn-WebNC-TDTU",
+  "name": "DoAnWebNCTDTU",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon --inspect index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "path": "^0.12.7"
   }
 }

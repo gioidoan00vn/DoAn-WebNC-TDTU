@@ -9,6 +9,16 @@
     width:100%;
     border:1px solid black;
     color:black;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.web_1{
+    width: 100px;
+    background-color: black;
+    height: 100px;
 }
 img{
     height:18px;
