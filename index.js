@@ -6,6 +6,9 @@ app.use(express.static('public'))
 app.get('/loginwithsv', (req, res) => {
     res.render('login_with_google')
 })
+app.get('/loginwithadmin',(req,res)=>{
+	res.render('login_with_admin')
+})
 app.get('/main', (req,res) => {
     res.send('ok')
 })

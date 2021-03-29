@@ -1,3 +1,4 @@
+/*Login as google*/
 .web_1a{
     background:white;
     border-radius:2px;
@@ -25,4 +26,16 @@ img{
     display:inline-block;
     vertical-align:middle;
     box-sizing:border-box;
+}
+
+/*Login as teacher/admin*/
+.web-title-mod{
+    font-weight: bold;
+    text-align: center;
+}
+.container-1{
+    margin: auto;
+    padding: 10px;
+    margin-left:30%;
+    margin-top:10%;
 }
