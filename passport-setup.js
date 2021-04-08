@@ -1,6 +1,5 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-
 passport.serializeUser(function(user,done){
   done(null, user);
 })
@@ -15,7 +14,9 @@ passport.use(new GoogleStrategy({
     passReqToCallback:true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log(profile)
-    return done(null, profile);
+    //console.log(profile)
+    if (profile._json.hd !== 'student.tdtu.edu.vn'){
+      return done(null, false);
+    }
   }
 ));
