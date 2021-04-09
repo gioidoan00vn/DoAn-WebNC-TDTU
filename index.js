@@ -34,6 +34,7 @@ const isLoggedIn = (req, res, next) => {
     }
 }
 
+
 // Initializes passport and passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
