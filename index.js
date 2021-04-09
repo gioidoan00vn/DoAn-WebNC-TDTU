@@ -2,9 +2,20 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const passport = require('passport');
+const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
+const request = require('request')
+const flash = require("connect-flash");
 require('./passport-setup');
+require('./models/db.js')
 
+const AccountRouter = require('./routers/AccountRouter');
+const checkLogin = require('./auth/checkLogin');
+
+app.use(flash());
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+app.use(bodyParser.json());
 
 // For an actual app you should configure this with an experation time, better keys, proxy and secure
 app.use(cookieSession({
@@ -28,6 +39,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Example protected and unprotected routes
+app.get('/home',(req,res)=>{
+  res.send('Day la trang home')
+})
 app.get('/', (req, res) => res.render('login_with_google'))
 app.get('/failed', (req, res) => res.send('You Failed to log in!'))
 
@@ -39,6 +53,7 @@ app.get('/good', isLoggedIn, (req, res) =>{
 
 // Auth Routes
 app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
 
 app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
   function(req, res) {
@@ -53,4 +68,12 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+
+// account router
+app.use('/account', AccountRouter)
+// disable all link
+app.all('*', (req, res) => res.json({code:101, message: 'Đường dẫn hoặc phương thức không được hỗ trợ'}))
+
+
 app.listen(3000, () => console.log(`web app listening on port ${3000}!`))
+
