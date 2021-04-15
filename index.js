@@ -11,6 +11,7 @@ require('./models/db.js')
 
 const AccountRouter = require('./routers/AccountRouter');
 const checkLogin = require('./auth/checkLogin');
+const addandedit= require('./routers/addanedit')
 
 app.use(flash());
 app.use(express.urlencoded({extended: false}))
@@ -40,23 +41,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Example protected and unprotected routes
-app.get('/home',(req,res)=>{
-  res.send('Day la trang home')
-})
-app.get('/', (req, res) => res.render('login_with_google'))
-app.get('/failed', (req, res) => res.send('You Failed to log in!'))
+app.get('/loginsv', (req, res) => res.render('login_with_google'))
+app.get('/failed', (req, res) => res.redirect('login_with_google'))
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
 app.get('/good', isLoggedIn, (req, res) =>{
-    res.render("profile",{name:req.user.displayName,pic:req.user.photos[0].value,email:req.user.emails[0].value})
-    //res.send('ok')
+    //res.render("profile",{name:req.user.displayName,pic:req.user.photos[0].value,email:req.user.emails[0].value})
+    res.send('ok')
 })
 
 // Auth Routes
 app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 
-app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/loginsv' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/good');
@@ -72,6 +70,8 @@ app.get('/logout', (req, res) => {
 
 // account router
 app.use('/account', AccountRouter)
+//add and edit student
+app.use('/edit',addandedit)
 // disable all link
 app.all('*', (req, res) => res.json({code:101, message: 'Đường dẫn hoặc phương thức không được hỗ trợ'}))
 
