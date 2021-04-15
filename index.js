@@ -60,7 +60,6 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
     res.redirect('/good');
   }
 );
-
 app.get('/logout', (req, res) => {
     req.session = null;
     req.logout();

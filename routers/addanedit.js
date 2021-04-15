@@ -3,10 +3,10 @@ const Router = express.Router();
 const mongoose= require('mongoose');
 const User= mongoose.model('User')
 
-Router.get('/edit', (req, res) => {
+Router.get('/', (req, res) => {
     res.render('updateanedit')
 })
-Router.post('/edit',(req,res) => {
+Router.post('/',(req,res) => {
     if(req.body._id == '')
     {
         insertRecord(req,res);
@@ -39,4 +39,14 @@ function updateRecord(req, res) {
         }
     })
 }
+Router.get('/:id', (req,res) => {
+    User.findById(req.params.id, (err,doc) => {
+        if(!err){
+            res.render("updateanedit", {
+                viewTitle: "Update Student",
+                student:doc
+            })
+        }
+    })
+})
 module.exports= Router;
