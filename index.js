@@ -76,4 +76,5 @@ app.all('*', (req, res) => res.json({code:101, message: 'Đường dẫn hoặc 
 
 
 app.listen(3000, () => console.log(`web ap  p listening on port ${3000}!`))
+app.listen(3000, () => console.log(`web app listening on port ${3000}!`))
 
