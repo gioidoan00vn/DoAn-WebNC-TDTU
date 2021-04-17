@@ -20,10 +20,10 @@ passport.use(new GoogleStrategy({
     passReqToCallback:true
   },
   async function(request, accessToken, refreshToken, profile, done) {
-    //console.log(profile)
-    // if (profile._json.hd !== 'student.tdtu.edu.vn'){
-    //   return done(null, false);
-    // }
+    console.log(profile)
+    if (profile._json.hd !== 'student.tdtu.edu.vn'){
+      return done(null, false);
+    }
     const newUser= {
       googleID: profile.id,
       email:profile.emails[0].value,

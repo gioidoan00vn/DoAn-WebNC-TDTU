@@ -17,11 +17,9 @@ const UserSchema = new Schema({
     },
     class:{
         type:String,
-        default: "",
     },
     faculty:{
         type:String,
-        default: "",
     },
     image:{
         type:String,

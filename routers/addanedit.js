@@ -4,6 +4,7 @@ const mongoose= require('mongoose');
 const User= mongoose.model('User')
 
 Router.get('/', (req, res) => {
+    console.log(req.user._id);
     res.render('updateanedit')
 })
 Router.post('/',(req,res) => {
@@ -14,24 +15,32 @@ Router.post('/',(req,res) => {
     updateRecord(req, res)
 })
 
-function insertRecord(req,res){
-    const student= new User();
-    student.class= req.body.class;
-    student.faculty= req.body.faculty;
-    student.save((err,doc) => {
-        if(!err){
-            res.send('bạn đã lưu thành công')
-        }
-        else{
-            res.send('error')
-        }
-    })
-}
+// function insertRecord(req,res){
+//     const student= new User();
+//     student.class= req.body.class;
+//     student.faculty= req.body.faculty;
+//     student.save((err,doc) => {
+//         if(!err){
+//             //const obj = JSON.parse(JSON.stringify(req.body))
+//             console.log('work1')
+//             res.send('bạn đã lưu thành công')
+//         }
+//         else{
+//             res.send('error')
+//         }
+//     })
+// }
 
 function updateRecord(req, res) {
-    User.findOneAndUpdate({_id: req.body._id}, req.body, {new: true}, (err,doc) => {
+    
+    User.findByIdAndUpdate({_id: req.user._id}, {
+        class: req.body.class,
+        faculty: req.body.faculty
+    }, {new: true}, (err,doc) => {
         if(!err){
             res.send('bạn đã update thành công')
+            const obj = JSON.parse(JSON.stringify(req.body))
+            console.log(obj)
         }
         else
         {
