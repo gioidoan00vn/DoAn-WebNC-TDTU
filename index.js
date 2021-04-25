@@ -11,7 +11,8 @@ require('./models/db.js')
 
 const AccountRouter = require('./routers/AccountRouter');
 const checkLogin = require('./auth/checkLogin');
-const addandedit= require('./routers/addanedit')
+const addandedit= require('./routers/addanedit');
+const { render } = require('ejs');
 
 app.use(flash());
 app.use(express.urlencoded({extended: false}))
@@ -43,7 +44,7 @@ app.use(passport.session());
 // Example protected and unprotected routes
 app.get('/loginsv', (req, res) => res.render('login_with_google'))
 app.get('/failed', (req, res) => res.redirect('login_with_google'))
-
+app.get('/admin',(req,res)=>res.render('login_with_admin'))
 // In this route you can see that if the user is logged in u can acess his info in: req.user
 app.get('/good', isLoggedIn, (req, res) =>{
     //res.render("profile",{name:req.user.displayName,pic:req.user.photos[0].value,email:req.user.emails[0].value})
@@ -75,6 +76,6 @@ app.use('/edit',addandedit)
 app.all('*', (req, res) => res.json({code:101, message: 'Đường dẫn hoặc phương thức không được hỗ trợ'}))
 
 
-app.listen(3000, () => console.log(`web ap  p listening on port ${3000}!`))
 app.listen(3000, () => console.log(`web app listening on port ${3000}!`))
+
 
