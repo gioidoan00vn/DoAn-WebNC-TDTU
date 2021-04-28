@@ -44,7 +44,6 @@ app.use(passport.session());
 
 
 // Example protected and unprotected routes
-app.get('/loginsv', (req, res) => res.render('login_with_google'))
 app.get('/failed', (req, res) => res.redirect('login_with_google'))
 app.get('/login',(req,res)=>res.render('login',{error:""}))
 // In this route you can see that if the user is logged in u can acess his info in: req.user
