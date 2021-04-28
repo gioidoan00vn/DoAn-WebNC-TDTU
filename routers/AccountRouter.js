@@ -10,6 +10,7 @@ const registerValidator = require('./validators/registerValidator')
 const loginValidator = require('./validators/loginValidator')
 
 Router.post('/login', loginValidator, (req, res) => {
+    let error="";
     let result = validationResult(req)
     if (result.errors.length === 0) {
         let {email, password} = req.body 
@@ -18,14 +19,16 @@ Router.post('/login', loginValidator, (req, res) => {
         Account.findOne({email: email})
         .then(acc => {
             if (!acc) {
-                throw new Error('Email không tồn tại')
+                error = 'Email không tồn tại'
+                console.log(error)
             }
             account = acc
             return bcrypt.compare(password, acc.password)
         })
         .then(passwordMatch => {
             if (!passwordMatch) {
-                return res.status(401).json({code: 3, message: 'Đăng nhập thất bại, mật khẩu không chính xác'})
+                error = 'Đăng nhập thất bại, mật khẩu không chính xác'
+                console.log(error)
             }
             const {JWT_SECRET} = process.env
             jwt.sign({
@@ -33,16 +36,20 @@ Router.post('/login', loginValidator, (req, res) => {
             },JWT_SECRET, {
                 expiresIn: '1h'
             }, (err, token) => {
-                if (err) throw err
-                return res.json({
+                res.json({
                     code: 0,
                     message:'Đăng nhập thành công',
                     token: token
                 })
+               
             })
+            if (error!=""){
+                return res.render('login',{error:error})
+            }
         })
         .catch(e => {
-            return res.status(401).json({code: 2, message: 'Đăng nhập thất bại: ' + e.message})
+            error =  'Đăng nhập thất bại: ' + e.message
+            console.log(error)
         })
     }
     else {
@@ -52,8 +59,10 @@ Router.post('/login', loginValidator, (req, res) => {
             message = messages[m].msg
             break
         }
-        return res.json({code: 1, message: message})
+        error =  message
+        return res.render('login',{error:error})
     }
+    
 })
 
 Router.post('/register', registerValidator, (req, res) => {
@@ -73,7 +82,8 @@ Router.post('/register', registerValidator, (req, res) => {
             let user = new Account({
                 email: email, 
                 password: hashed,
-                fullname: fullname
+                fullname: fullname,
+                role:0
             })
             return user.save();
         })

@@ -60,22 +60,24 @@
                 <label class="custom-control-label" for="customCheck">Remember</label>
               </div>
             </div>
-            <div class="form-group">
-              <div class="alert alert-danger alert-dismissible fade hide">
+            <div id="error-message" class="form-group">
+              <% if (error) { %>
+                <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                Invalid username or password!
-              </div>
+                  <%= error %>
+                </div>
+              <% } %>
             </div>
             <div class="form-group">
               <button class="btn btn-success px-5" type="submit">Login</button>
-            </div>       
+              
+            </div> 
           </form>
+          <a href="/google"><button class="btn btn-warning px-5" >Login as Google</button></a>  
+        </div>         
         </div>
       </div>
     </div>
-  </div>
-
-
 </body>
 
 </html>

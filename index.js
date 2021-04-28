@@ -41,14 +41,16 @@ const isLoggedIn = (req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 // Example protected and unprotected routes
 app.get('/loginsv', (req, res) => res.render('login_with_google'))
 app.get('/failed', (req, res) => res.redirect('login_with_google'))
-app.get('/admin',(req,res)=>res.render('login_with_admin'))
+app.get('/login',(req,res)=>res.render('login',{error:""}))
 // In this route you can see that if the user is logged in u can acess his info in: req.user
 app.get('/good', isLoggedIn, (req, res) =>{
     //res.render("profile",{name:req.user.displayName,pic:req.user.photos[0].value,email:req.user.emails[0].value})
-    res.send('ok')
+    res.send('Giao dien chinh')
 })
 
 // Auth Routes

@@ -9,11 +9,9 @@ const UserSchema = new Schema({
     },
     firstName:{
         type:String,
-        require:true,
     },
     lastName:{
         type:String,
-        require:true,
     },
     class:{
         type:String,
